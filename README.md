@@ -263,3 +263,134 @@ print(result_table)
 Make sure to replace the file paths in the code with the actual paths to your spectroscopic data, object names, and chemical elements files. The `spectra_data.txt` file should contain the spectroscopic data in a comma-separated format, where each row represents the spectrum of a celestial object. The `object_names.txt` file should contain the corresponding object names for each spectrum. The `chemical_elements.txt` file should contain the list of chemical elements to be predicted.
 
 This code uses a random forest classifier from the scikit-learn library to train a model on the training data and predict the object names for the test data. The results are then formatted into a markdown table and printed.
+
+```python
+import os
+import textract
+import nltk
+from nltk.tokenize import sent_tokenize, word_tokenize
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+
+def extract_information_from_papers(papers_directory):
+    extracted_information = []
+    
+    # Iterate through each file in the papers directory
+    for filename in os.listdir(papers_directory):
+        if filename.endswith(".pdf"):
+            # Extract text from the PDF using textract
+            text = textract.process(os.path.join(papers_directory, filename))
+            
+            # Tokenize the text into sentences
+            sentences = sent_tokenize(text.decode('utf-8'))
+            
+            # Process each sentence
+            for sentence in sentences:
+                # Tokenize the sentence into words
+                words = word_tokenize(sentence)
+                
+                # Remove stopwords and punctuation
+                words = [word.lower() for word in words if word.isalpha() and word.lower() not in stopwords.words('english')]
+                
+                # Lemmatize the words
+                lemmatizer = WordNetLemmatizer()
+                words = [lemmatizer.lemmatize(word) for word in words]
+                
+                # Extract relevant information based on patterns or keywords
+                object_name = extract_object_name(words)
+                properties = extract_properties(words)
+                references = extract_references(words)
+                
+                if object_name and properties and references:
+                    extracted_information.append({
+                        'Object Name': object_name,
+                        'Properties': properties,
+                        'References': references
+                    })
+    
+    return extracted_information
+
+def extract_object_name(words):
+    # Implement logic to extract the object name from the words
+    # Return the object name if found, otherwise return None
+    pass
+
+def extract_properties(words):
+    # Implement logic to extract the properties from the words
+    # Return the properties if found, otherwise return None
+    pass
+
+def extract_references(words):
+    # Implement logic to extract the references from the words
+    # Return the references if found, otherwise return None
+    pass
+
+# Example usage
+papers_directory = '/path/to/papers'
+extracted_information = extract_information_from_papers(papers_directory)
+
+# Output the extracted information as a markdown code block
+print("```")
+for info in extracted_information:
+    print(f"Object Name: {info['Object Name']}")
+    print(f"Properties: {info['Properties']}")
+    print(f"References: {info['References']}")
+    print()
+print("```")
+```
+
+Make sure to replace `/path/to/papers` with the actual path to the directory containing the scientific papers you want to analyze. Note that this code is just a starting point and you'll need to implement the logic for extracting the object name, properties, and references based on the structure and content of the scientific papers you're working with.
+
+To design an AI-powered system that generates simulated astronomical images based on user-defined parameters, we can use a combination of image synthesis techniques and deep learning. Here's an example code that outlines the steps involved:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the parameters for the simulated image
+object_type = 'star'
+position = (100, 100)
+observation_conditions = {
+    'exposure_time': 10,  # in seconds
+    'telescope_diameter': 2.5,  # in meters
+    'atmospheric_turbulence': 0.5  # on a scale of 0 to 1
+}
+
+# Define a function to generate the simulated image
+def generate_simulated_image(object_type, position, observation_conditions):
+    # Use deep learning models or image synthesis techniques to generate the image
+    # Here, we'll use a simple approach of generating a Gaussian point spread function (PSF)
+    # centered at the specified position
+    
+    # Generate a grid of pixel coordinates
+    x, y = np.meshgrid(np.arange(200), np.arange(200))
+    
+    # Calculate the distance from each pixel to the specified position
+    distance = np.sqrt((x - position[0])**2 + (y - position[1])**2)
+    
+    # Generate the PSF based on the observation conditions
+    psf = np.exp(-0.5 * (distance / (observation_conditions['telescope_diameter'] / 2.355))**2)
+    
+    # Scale the PSF based on the exposure time
+    psf *= observation_conditions['exposure_time']
+    
+    # Add atmospheric turbulence effects
+    psf += np.random.normal(0, observation_conditions['atmospheric_turbulence'], psf.shape)
+    
+    # Normalize the image
+    psf /= np.max(psf)
+    
+    return psf
+
+# Generate the simulated image
+simulated_image = generate_simulated_image(object_type, position, observation_conditions)
+
+# Display the simulated image
+plt.imshow(simulated_image, cmap='gray')
+plt.axis('off')
+plt.show()
+```
+
+This code generates a simulated astronomical image based on the user-defined parameters of object type, position, and observation conditions. It uses a simple approach of generating a Gaussian point spread function (PSF) centered at the specified position. The PSF is then scaled based on the exposure time, and atmospheric turbulence effects are added. Finally, the image is normalized and displayed using matplotlib.
+
+Please note that this code is a simplified example and may not produce realistic or scientifically accurate images. More sophisticated techniques and models can be used to improve the quality and realism of the simulated images.
