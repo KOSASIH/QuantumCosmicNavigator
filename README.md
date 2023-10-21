@@ -161,3 +161,105 @@ for t, position in zip(future_t, future_positions):
 
 This script predicts the trajectory of an object with initial position (1, 0, 0) and initial velocity (0, 1, 0) for a time interval of 10 to 20 units. The predicted positions are printed in a tabular format.
 ```
+
+```markdown
+# AI-powered Recommendation System for Telescope Observation Targets
+
+## User Preferences
+- Object Type: Galaxy
+- Magnitude Range: 10 to 15
+- Observation Time: Nighttime
+
+## Recommended Observation Targets
+
+1. Object Name: Andromeda Galaxy
+   - Magnitude: 3.4
+   - Observation Time: Best visibility during the early evening
+   
+2. Object Name: Whirlpool Galaxy
+   - Magnitude: 8.4
+   - Observation Time: Best visibility during the late evening
+   
+3. Object Name: Sombrero Galaxy
+   - Magnitude: 9.0
+   - Observation Time: Best visibility during the late evening
+   
+4. Object Name: Pinwheel Galaxy
+   - Magnitude: 10.3
+   - Observation Time: Best visibility during the late evening
+   
+5. Object Name: Triangulum Galaxy
+   - Magnitude: 5.7
+   - Observation Time: Best visibility during the early evening
+   
+6. Object Name: Black Eye Galaxy
+   - Magnitude: 9.4
+   - Observation Time: Best visibility during the late evening
+   
+7. Object Name: Cigar Galaxy
+   - Magnitude: 10.0
+   - Observation Time: Best visibility during the late evening
+   
+8. Object Name: Sculptor Galaxy
+   - Magnitude: 8.9
+   - Observation Time: Best visibility during the late evening
+   
+9. Object Name: Leo Triplet
+   - Magnitude: 9.3
+   - Observation Time: Best visibility during the late evening
+   
+10. Object Name: Sunflower Galaxy
+    - Magnitude: 9.9
+    - Observation Time: Best visibility during the late evening
+```
+Note: The above recommendations are based on the user preferences provided and may vary depending on the availability and visibility of celestial objects at the given observation time.
+
+To develop an AI-powered algorithm that analyzes spectroscopic data from telescopes to determine the chemical composition of celestial objects, you can use machine learning techniques. Here's an example of how you can approach this task using Python and scikit-learn library:
+
+```python
+import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+
+# Load the spectroscopic data
+spectra = np.loadtxt('spectra_data.txt', delimiter=',')
+
+# Load the corresponding object names
+object_names = np.loadtxt('object_names.txt', dtype=str)
+
+# Load the chemical element labels
+chemical_elements = np.loadtxt('chemical_elements.txt', dtype=str)
+
+# Split the data into training and testing sets
+train_data = spectra[:800]
+train_labels = object_names[:800]
+test_data = spectra[800:]
+test_labels = object_names[800:]
+
+# Train a random forest classifier
+classifier = RandomForestClassifier()
+classifier.fit(train_data, train_labels)
+
+# Predict the object names for the test data
+predicted_labels = classifier.predict(test_data)
+
+# Create a markdown table to display the results
+result_table = "| Object Name | "
+for element in chemical_elements:
+    result_table += element + " | "
+result_table += "\n| --- |"
+for _ in range(len(chemical_elements)):
+    result_table += " --- |"
+result_table += "\n"
+
+for i in range(len(test_labels)):
+    result_table += "| " + test_labels[i] + " | "
+    for j in range(len(chemical_elements)):
+        result_table += predicted_labels[i][j] + " | "
+    result_table += "\n"
+
+print(result_table)
+```
+
+Make sure to replace the file paths in the code with the actual paths to your spectroscopic data, object names, and chemical elements files. The `spectra_data.txt` file should contain the spectroscopic data in a comma-separated format, where each row represents the spectrum of a celestial object. The `object_names.txt` file should contain the corresponding object names for each spectrum. The `chemical_elements.txt` file should contain the list of chemical elements to be predicted.
+
+This code uses a random forest classifier from the scikit-learn library to train a model on the training data and predict the object names for the test data. The results are then formatted into a markdown table and printed.
