@@ -29,6 +29,6 @@ Your collective efforts have transformed QuantumCosmicNavigator into a powerful 
 
 Thank you for being an integral part of the QuantumCosmicNavigator community.
 
-[KOSASIH](
+[KOSASIH](https://www.linkedin.com/in/kosasih-81b46b5a) 
 
 Creator Of QuantumCosmicNavigator
