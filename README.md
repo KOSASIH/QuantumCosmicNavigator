@@ -66,7 +66,7 @@ By addressing these challenges, QuantumCosmicNavigator aims to revolutionize cos
 
 # Contributor Guide 
 
-### Quantum CosmicNavigator GitHub Repository Contributor Guide
+### QuantumCosmicNavigator GitHub Repository Contributor Guide
 
 Thank you for your interest in contributing to Quantum CosmicNavigator! Your collaboration is invaluable to advancing cosmic exploration. Follow these guidelines to contribute effectively:
 
